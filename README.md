@@ -1,5 +1,5 @@
 Redis Lua Token Bucket + IP Spoofing patch
-
+```
 [ CLIENT REQUEST ]
                │
                ▼
@@ -24,7 +24,7 @@ Redis Lua Token Bucket + IP Spoofing patch
        ▼               ▼
  Forward to API   Return 429 Error
 
-
+```
  Edge-Optimized API Gateway & Distributed Rate Limiter
 
 1. Architectural Overview
