@@ -1,0 +1,1 @@
+npm pkg set type="module"
