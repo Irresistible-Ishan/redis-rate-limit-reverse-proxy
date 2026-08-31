@@ -12,13 +12,13 @@ for developnment of this project im not taking any website as the reference and 
 
 but if there is no upstream server behind the gateway, the proxy will attempt to forward packets into empty space and will return 502 Bad Gateway
 
-[Browser/ Attacker ] 
-       │  (Port : 8080)
-        \/
-[ Go API Gateway ]   (Our Reverse Proxy & Rate Limiter )
-       │  (Port :5000)
-       \/
-[ Mock Backend API] ( The protected upstream service)
+[Browser/ Attacker ] <br>
+       │  (Port : 8080) <br>
+        \/ <br>
+[ Go API Gateway ]   (Our Reverse Proxy & Rate Limiter ) <br>
+       │  (Port :5000)<br>
+       \/<br>
+[ Mock Backend API] ( The protected upstream service)<br>
 
 so this is the structure of the project how ill put it up to build it with some reference 
 
