@@ -27,7 +27,9 @@ so this is the structure of the project how ill put it up to build it with some 
 
 for phase 1 im first building the mock backend server using js so we can test the api gateway protecting it as i do need some reference ill be taking local reference instead of any site during the developnment
 
+https://gobyexample.com/url-parsing
 
+first we'll parse the URL 
 
 ------------------------------------
 
