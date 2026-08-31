@@ -6,6 +6,8 @@ layer 7 reverse proxy and load balancer and api gateway , atomic lua catching
 
 NOTE :  during the developnment of this project ill be mentioning all the work here in the readme and that includes problems i faced and theory i learned and things i handled while making this , i will write a different shiny professonal readme after completion 
 
+Im really excited to make this project and its one of the most indepth backend and network software engineering project ill be making totally myself as of now , im using alot of books and resources on the internet to learn the theoretical paths and trying to implement them programically
+
 for developnment of this project im not taking any website as the reference and im going for a local site protection based on port 5000
 
 (since the structure was visible in obsidian markdown but not on github so im including the images here)
