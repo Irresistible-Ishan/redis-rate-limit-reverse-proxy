@@ -12,13 +12,13 @@ for developnment of this project im not taking any website as the reference and 
 
 but if there is no upstream server behind the gateway, the proxy will attempt to forward packets into empty space and will return 502 Bad Gateway
 
-[ Browser / Attacker ] 
-       │  (Port :8080)
-       ▼
-[ Go API Gateway ]   <── Our Reverse Proxy & Rate Limiter
+[Browser/ Attacker ] 
+       │  (Port : 8080)
+        \/
+[ Go API Gateway ]   (Our Reverse Proxy & Rate Limiter )
        │  (Port :5000)
-       ▼
-[ Mock Backend API ] <── The protected upstream service
+       \/
+[ Mock Backend API] ( The protected upstream service)
 
 so this is the structure of the project how ill put it up to build it with some reference 
 
@@ -26,9 +26,85 @@ so this is the structure of the project how ill put it up to build it with some 
 
 ![Structure](/demo-images-videos/structure.png)
 ![flow](/demo-images-videos/flow.png)
+------------------------------------
+------------- phase 1 ------------
+
+ok so for phase 1 im first building the mock backend server using js so we can test the api gateway protecting it as i do need some reference ill be taking local reference instead of any site during the developnment
 
 
 
+------------------------------------
+
+
+--------------------------------------------
+approximate phase of the project 
+--------------------------------------------
+
+
+Phase 1 — The Base Proxy Engine
+
+Component:
+The Base Proxy Engine
+
+What We Build:
+
+Upstream backend mock (:5000)
+Go reverse proxy (:8080)
+Use net/http/httputil
+
+How We Test It:
+
+Run both servers
+Hit :8080/api/resource
+Confirm the backend at :5000 receives the request and responds
+
+Phase 2 — The Identity Engine
+
+Component:
+The Identity Engine
+
+What We Build:
+
+client_ip.go
+TCP extraction logic
+
+How We Test It:
+
+Send requests with spoofed headers:
+-H "X-Forwarded-For: 1.1.1.1"
+Verify the proxy logs the true local TCP socket IP
+
+Phase 3 — The Atomic Lua Limiter
+
+Component:
+The Atomic Lua Limiter
+
+What We Build:
+
+Redis connection pool
+Token Bucket Lua script
+
+How We Test It:
+
+Write a small unit test
+Execute 20 concurrent goroutines against Redis
+Prove there are zero race conditions
+
+Phase 4 — Pipeline Wire-Up & Attack Verification
+
+Component:
+Pipeline Wire-Up & Attack Verification
+
+What We Build:
+
+Connect middleware to the proxy
+Run race and spoof attack scripts
+
+How We Test It:
+
+Verify burst traffic is clamped at the limit
+Verify 429 responses are returned
+Verify backend CPU stays at approximately 0%
 
 --------------------------------------------
 GENERAL INFORMATION ABOUT THE PROJECT (ai written stuff below this - )
