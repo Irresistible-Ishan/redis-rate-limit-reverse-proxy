@@ -1,70 +1,22 @@
 Redis Lua Token Bucket + IP Spoofing patch
+layer 7 reverse proxy and load balancer and api gateway , atomic lua catching 
+
+----------- human written docs -----------
+
+NOTE :  during the developnment of this project ill be mentioning all the work here in the readme and that includes problems i faced and theory i learned and things i handled while making this , i will write a different shiny professonal readme after completion 
 
 for developnment of this project im not taking any website as the reference and im going for a local site protection based on port 5000
 
-api-gateway/
-├── cmd/
-│   └── gateway/
-│       └── main.go             # Entrypoint: initializes Redis, builds pipeline, starts server
-├── internal/
-│   ├── config/
-│   │   └── config.go           # Ports, upstream URLs, rate-limit thresholds
-│   ├── identity/
-│   │   └── client_ip.go        # TCP-level origin IP extraction (anti-spoofing)
-│   ├── limiter/
-│   │   ├── limiter.go          # Go wrapper invoking Redis via go-redis/v9
-│   │   └── token_bucket.lua    # Raw Lua script executed atomically inside Redis
-│   ├── middleware/
-│   │   └── ratelimit.go        # HTTP middleware chaining identity -> limiter -> proxy
-│   └── proxy/
-│       └── proxy.go            # httputil.ReverseProxy implementation to forward clean traffic
-├── mock-backend/
-│   └── main.go                 # Dummy upstream server to verify request forwarding
-├── test-scripts/
-│   ├── race_test.go            # Concurrent bombarding test
-│   └── spoof_test.go           # Header spoofing test
-├── go.mod
-└── go.sum
+(since the structure was visible in obsidian markdown but not on github so im including the images here)
+
+![Structure](/demo-images-videos/structure.png)
+![flow](/demo-images-videos/flow.png)
 
 
-[ Incoming HTTP Request ]
-          │
-          ▼
-1. Go HTTP Listener (net/http on port :8080)
-   Spawns a lightweight Goroutine (~2KB memory).
-          │
-          ▼
-2. Identity Layer (`internal/identity/client_ip.go`)
-   Extracts IP directly from `r.RemoteAddr` (TCP socket).
-   Rejects untrusted `X-Forwarded-For` injection.
-          │
-          ▼
-3. Rate Limit Middleware (`internal/middleware/ratelimit.go`)
-   Calls `limiter.Allow(ctx, clientIP)`.
-          │
-          ▼
-4. Distributed Limiter (`internal/limiter/limiter.go`)
-   Uses `go-redis/v9` to issue `EVALSHA` / `EVAL` to Redis.
-          │
-          ▼
-5. In-Memory Redis Engine (Running `token_bucket.lua`)
-   - Reads bucket balance for this IP key.
-   - Computes token replenishment based on timestamp delta.
-   - Decrements token if available.
-   - Returns [1 = Allowed, 0 = Rejected] in a single atomic cycle.
-          │
-          ├───────────────────────────────┐
-          │ (If 0 / Denied)               │ (If 1 / Allowed)
-          ▼                               ▼
-   HTTP 429 Too Many Requests     6. Reverse Proxy Layer (`internal/proxy/proxy.go`)
-   Connection drops immediately.     Uses `httputil.NewSingleHostReverseProxy()`.
-   (Backend is untouched).           Rewrites headers & forwards request.
-                                          │
-                                          ▼
-                                  7. Upstream Backend (Port :5000)
-                                     Receives validated traffic, returns 200 OK.
 
 
+--------------------------------------------
+GENERAL INFORMATION ABOUT THE PROJECT (ai written stuff below this - )
 
  Edge-Optimized API Gateway & Distributed Rate Limiter
 
