@@ -22,14 +22,10 @@ but if there is no upstream server behind the gateway, the proxy will attempt to
 
 so this is the structure of the project how ill put it up to build it with some reference 
 
-(since the structure was visible in obsidian markdown but not on github so im including the images here)
-
-![Structure](/demo-images-videos/structure.png)
-![flow](/demo-images-videos/flow.png)
 ------------------------------------
-------------- phase 1 ------------
+## phase one 
 
-ok so for phase 1 im first building the mock backend server using js so we can test the api gateway protecting it as i do need some reference ill be taking local reference instead of any site during the developnment
+for phase 1 im first building the mock backend server using js so we can test the api gateway protecting it as i do need some reference ill be taking local reference instead of any site during the developnment
 
 
 
@@ -105,6 +101,11 @@ How We Test It:
 Verify burst traffic is clamped at the limit
 Verify 429 responses are returned
 Verify backend CPU stays at approximately 0%
+
+(since the structure was visible in obsidian markdown but not on github so im including the images here)
+
+![Structure](/demo-images-videos/structure.png)
+![flow](/demo-images-videos/flow.png)
 
 --------------------------------------------
 GENERAL INFORMATION ABOUT THE PROJECT (ai written stuff below this - )
