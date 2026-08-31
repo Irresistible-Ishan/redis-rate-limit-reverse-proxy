@@ -10,6 +10,18 @@ Im really excited to make this project and its one of the most indepth backend a
 
 for developnment of this project im not taking any website as the reference and im going for a local site protection based on port 5000
 
+but if there is no upstream server behind the gateway, the proxy will attempt to forward packets into empty space and will return 502 Bad Gateway
+
+[ Browser / Attacker ] 
+       │  (Port :8080)
+       ▼
+[ Go API Gateway ]   <── Our Reverse Proxy & Rate Limiter
+       │  (Port :5000)
+       ▼
+[ Mock Backend API ] <── The protected upstream service
+
+so this is the structure of the project how ill put it up to build it with some reference 
+
 (since the structure was visible in obsidian markdown but not on github so im including the images here)
 
 ![Structure](/demo-images-videos/structure.png)
