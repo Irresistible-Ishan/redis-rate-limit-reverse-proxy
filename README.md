@@ -1,6 +1,7 @@
 Redis Lua Token Bucket + IP Spoofing patch
 layer 7 reverse proxy and load balancer and api gateway , atomic lua catching 
 
+--------------------------------------------
 ----------- human written docs -----------
 
 NOTE :  during the developnment of this project ill be mentioning all the work here in the readme and that includes problems i faced and theory i learned and things i handled while making this , i will write a different shiny professonal readme after completion 
